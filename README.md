@@ -47,10 +47,3 @@
 ### JQuery
 ### CSS
 ### Bootstrap 4
-# GB-ERPsys
-
-### A open source ERP system to manage your employees data.
-#### > Comes with full .NET security feature with industrial standard
-#### > Forgery attack security.
-#### > Dynamic session management for multi login.
-#### > SHA algorithm encryption for login password authentication. 
