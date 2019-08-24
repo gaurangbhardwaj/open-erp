@@ -1,0 +1,285 @@
+﻿@model IEnumerable<LFTERPsys.Models.EosDataModel>
+
+@{
+    ViewBag.Title = "MyEOS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int validateyear;
+    if (DateTime.Now.Month >= 1 && DateTime.Now.Month <= 3)
+    {
+        validateyear = (Convert.ToInt32(DateTime.Now.ToString("yyyy")) - 1);
+    }
+    else
+    {
+        validateyear = DateTime.Now.Year;
+    }
+}
+@Styles.Render("~/Content/font-awesome")
+
+<div class="text-center font-weight-bold h3">
+    My EOS: @validateyear-@(validateyear + 1)
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 text-left h4">
+            <a class="badge badge-pill badge-primary" id="EnrollNew" style="cursor:pointer; color:white">Enroll New</a>
+        </div>
+
+        <div class="col-md-6 text-right h4">
+            <a class="badge badge-pill badge-secondary" id="ExportEOSbtn" style="cursor:pointer; color:white">Export EOS</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .workpercent {
+        width: 100%;
+        padding: 5px;
+    }
+</style>
+
+@{
+    if (DateTime.Now.Month >= 1 && DateTime.Now.Month <= 3)
+    {
+        validateyear = (Convert.ToInt32(DateTime.Now.ToString("yy")) - 1);
+    }
+    else
+    {
+        validateyear = Convert.ToInt32(DateTime.Now.ToString("yy"));
+    }
+}
+
+
+@Html.Hidden("SessionID", new { @Value = "" + ViewBag.SessionID + "" })
+@Html.AntiForgeryToken()
+<form method="post" onsubmit="saveall(event); return false;">
+    <table class="table text-center" id="workpercent" style="margin-bottom:0px;">
+
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.april)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.may)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.june)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.july)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.august)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.september)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.october)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.november)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.december)-@validateyear
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.january)-@(validateyear + 1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.february)-@(validateyear + 1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.march)-@(validateyear + 1)
+            </th>
+            <th></th>
+        </tr>
+
+        <tr class="font-weight-bold">
+            <td>
+                @Html.DisplayNameFor(model => model.projname)
+            </td>
+
+            @for (int i = 0; i < 12; i++)
+            {
+                <td></td>
+            }
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr id="workpercentrow" align="center">
+                <td>
+                    <select class="form-control form-control-sm font-weight-bold" disabled style="width:250px; color:darkblue;">
+                        <option>
+                            @Html.DisplayFor(modelItem => item.projname)
+                        </option>
+                    </select>
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.april, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.may, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.june, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.july, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.august, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.september, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.october, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.november, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.december, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.january, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.february, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.march, new { htmlAttributes = new { @max = "100", @min = "0", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" } })
+                </td>
+                <td>
+                    <button type="button" class="close text-danger" disabled aria-label="Close" title="You can't delete this enrollment!!">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+    <table class="table" id="AddWorkpercent" style="font-weight:bold; margin-top:0px;">
+        <tr id="DummyAddWorkpercentrow" style="display:none" align="center">
+            <!--Dummy Row For mirror insertion-->
+            <td>
+                <div class="text-primary">
+                    @Html.DropDownList("projname", (IEnumerable<SelectListItem>)ViewBag.AllProjectName, new { @class = "form-control form-control-sm font-weight-bold", @style = "width:250px; color:darkblue;", onclick = "validate_projectid();" })
+                </div>
+            </td>
+
+            <td>
+                @Html.TextBox("april", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("may", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("june", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("july", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("august", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("september", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("october", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("november", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("december", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("january", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("february", "0", new { @max = "100", @min = "0", @type = "number", @class = "form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                @Html.TextBox("march", "0", new { @max = "100", @min = "0", @type = "number", @class = " form-control form-control-sm workpercent", required = "required", onChange = "validate_workpercent();" })
+            </td>
+
+            <td>
+                <button type="button" class="close text-danger" id="RemoveRow" aria-label="Close" title="Delete enrollment">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <!--Errors-->
+    <div id="workpercentwarning" class="alert alert-warning" role="alert" hidden>
+        <strong>Warning!!</strong>&nbsp; Work percent (%) total should be equal (==) to 100% or 0% for each month.
+    </div>
+
+    <div id="projectidwarning" class="alert alert-warning" role="alert" hidden>
+        <strong>Warning!!</strong>&nbsp;Project ID can't be same for each enrollment.
+    </div>
+    <!--Errors-->
+
+    <table class="text-center table" id="OperationWorkpercent" style="font-weight:bold; margin-bottom:0px">
+        <tr id="enrollnewrow">
+            <td>
+                <div class="form-group h4" style="margin:0px">
+
+                    <a class="badge badge-pill badge-success" style="cursor:pointer; color:white" onclick="document.getElementById('SaveAll').click();">Save</a>
+
+                    <a class="badge badge-pill badge-danger" id="RollBack" style="cursor:pointer; color:white">Cancel</a>
+                </div>
+                <!------------------Main Submit Button---------------->
+                <button type="submit" id="SaveAll" style="display:none"></button>
+                <!---------------------------------------------------->
+            </td>
+        </tr>
+    </table>
+</form>
+<iframe id="txtArea1" style="display:none; margin:0px"></iframe>
+
+<!--Server Error and success-->
+<div id="serversuccess" class="alert alert-success" role="alert" style="display:none; margin-top:0px">
+    <strong>✔</strong>&nbsp;&nbsp;EOS has been saved successfully.
+</div>
+
+<div id="servererror" class="alert alert-danger" role="alert" style="display:none; margin-top:1px">
+    <strong>Server Error!!</strong>&nbsp;&nbsp;Failed to save EOS.
+</div>
+<!--Errors-->
+@section Scripts{
+    @Scripts.Render("~/bundles/MyEos")
+}
+

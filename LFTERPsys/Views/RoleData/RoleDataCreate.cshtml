@@ -1,0 +1,130 @@
+﻿@model LFTERPsys.Models.RoleDataModel
+
+@{
+    ViewBag.Title = "Add New Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/RoleDataCss/bootstrap-multiselect.css")
+<style>
+    .body-content {
+        margin: 0px;
+        margin-top: 15px;
+        padding: 0px 0px;
+    }
+
+    .body {
+        padding: 0px 0px;
+    }
+
+    .blue-gradient-rgba {
+        background: -webkit-linear-gradient(50deg,rgba(69,202,252,.9),rgba(48,63,159,.9)) !important;
+        background: -o-linear-gradient(50deg,rgba(69,202,252,.9),rgba(48,63,159,.9)) !important;
+        background: linear-gradient(40deg,rgba(69,202,252,.9),rgba(48,63,159,.9)) !important;
+        background-color: rgba(0, 0, 0, 0);
+        background-position-x: 0%;
+        background-position-y: 0%;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-image: linear-gradient(40deg, rgba(69, 202, 252, 0.9), rgba(48, 63, 159, 0.9));
+        background-size: auto;
+        background-origin: padding-box;
+        background-clip: border-box;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card gradient-card" style="border:none; ">
+        <div class="card-image" style="background-image: url(/Images/fleximage.jpg)">
+            <!-- Content -->
+            <div class="text-white d-flex mask blue-gradient-rgba">
+                <div class="first-content mx-auto p-4">
+                    <h2 class="card-title">@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-sm-2 text-nowrap">
+                @Html.LabelFor(model => model.rolename, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-sm-4">
+                @Html.EditorFor(model => model.rolename, new { htmlAttributes = new { @class = "form-control", @style = "max-width:none" } })
+                @Html.ValidationMessageFor(model => model.rolename, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-sm-2 text-nowrap">
+                @Html.LabelFor(model => model.pageaccess, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Hidden("pageaccess")
+            </div>
+            <div class="col-sm-4">
+                <select id="multiselect" name="multiselect" class="form-control" required="required" multiple="multiple">
+                    <optgroup label="Employee Info Data">
+                        <option value="EmployeeInfoDataIndex">View Employees</option>
+                        <option value="EmployeeInfoDataCreate">Add Employees</option>
+                        <option value="EmployeeInfoDataDetails">Employee Details</option>
+                        <option value="EmployeeInfoDataEdit">Edit Employee</option>
+                        <option value="EmployeeInfoDataDelete">Delete Employees</option>
+                        <option value="DepartmentData">Modify Departments</option>
+                        <option value="DesignationData">Modify Designations</option>
+                        <option value="DivisionData">Modify Divisions</option>
+                    </optgroup>
+                    <optgroup label="Project Info Data">
+                        <option value="ProjectDataIndex">View Projects</option>
+                        <option value="ProjectDataCreate">Add Projects</option>
+                        <option value="ProjectDataEdit">Edit Projecs</option>
+                        <option value="ProjectDataDelete">Delete Projects</option>
+                        <option value="ProjectCategoryData">Modify Project Categories</option>
+                    </optgroup>
+                    <optgroup label="EOS Data">
+                        <option value="MyEos">My Eos</option>
+                        <option value="AllEmployeesEos">All Employees Eos</option>
+                    </optgroup>
+                    <optgroup label="To Publish">
+                        <option value="CalendarData">Modify Calendar</option>
+                        <option value="AnnouncementDataIndex">View Announcements</option>
+                        <option value="AnnouncementDataCreate">Publish Annoucements</option>
+                        <option value="AnnouncementDataEdit">Edit Annoucements</option>
+                        <option value="AnnouncementDataDelete">Delete Annoucements</option>
+                    </optgroup>
+                    <optgroup label="Generate Report">
+                        <option value="CurrentMonthReport">Monthly Report</option>
+                        <option value="CustomReport">Custom Report</option>
+                    </optgroup>
+                    <optgroup label="User Login">
+                        <option value="EmployeeLoginData">Modify User Login</option>
+                    </optgroup>
+                </select>
+
+                @Html.ValidationMessageFor(model => model.pageaccess, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="form-actions h4 text-center" style="padding-top:1em">
+            <a class="badge badge-pill badge-success" onclick="getsetpageaccess(); document.getElementById('SubmitQuery').click();" style="cursor:pointer; color:white">Save</a>
+            <input type="submit" id="SubmitQuery" style="display:none" class="float-right">
+            @Html.ActionLink("Back", "RoleDataIndex", new { sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-primary" })
+        </div>
+    </div>
+}
+
+<div class="text-danger">@ViewBag.errormssg</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/RoleData")
+
+}
+
+

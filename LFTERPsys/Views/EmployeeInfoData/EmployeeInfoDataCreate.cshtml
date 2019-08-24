@@ -1,0 +1,170 @@
+﻿@model LFTERPsys.Models.EmployeeInfoDataModel
+@{
+    ViewBag.Title = "Add New Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/EmployeeInfoDataCss/details-page.css")
+@Styles.Render("~/Content/select2css")
+
+<style>
+    .body-content {
+        margin: 0px;
+        margin-top: 15px;
+        padding: 0px 0px;
+    }
+
+    .body {
+        padding: 0px 0px;
+    }
+</style>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card gradient-card" style="border:none; ">
+        <div class="card-image" style="background-image: url(/Images/fleximage.jpg)">
+            <!-- Content -->
+            <div class="text-white d-flex mask blue-gradient-rgba">
+                <div class="first-content mx-auto p-4">
+                    <h2 class="card-title">@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container emp-profile">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <input type="file" id="uploadedphoto" name="uploadedphoto" accept=".jpg, .jpeg" onclick=function(change) class="file-upload text-center" />
+                    <img id="profileimage" src="~/Images/ProfileImageAvatar/avatar.png" class="avatar rounded-circle img-thumbnail" alt="avatar" width="40" height="40" />
+                    <br />
+                    <h6>Click to upload image</h6>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <p><strong>Employee General Info</strong></p>
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.empid, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.empid, new { htmlAttributes = new { placeholder = "Employee ID", @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.empid, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.empname, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.empname, new { htmlAttributes = new { placeholder = "Employee Name", @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.empname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row" style="padding-top:2em">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.divname, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.divname, (IEnumerable<SelectListItem>)ViewBag.AllDivisionName, "-- Select Division --", new { @class = "form-control search-box", required = "required" })
+                        @Html.ValidationMessageFor(model => model.divname, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.depname, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("depname", (IEnumerable<SelectListItem>)ViewBag.AllDepartmentName, "-- Select Department --", new { @class = "form-control search-box", required = "required" })
+                        @Html.ValidationMessageFor(model => model.depname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row" style="padding-top:2em">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.desgname, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("desgname", (IEnumerable<SelectListItem>)ViewBag.AllDesignationName, "-- Select Designation --", new { @class = "form-control search-box", required = "required" })
+                        @Html.ValidationMessageFor(model => model.desgname, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 text-nowrap">
+                        @Html.LabelFor(model => model.empreporting, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("empreporting", (IEnumerable<SelectListItem>)ViewBag.AllReportingTo, "-- Select Reporting To --", new { @class = "form-control search-box", required = "required" })
+                        @Html.ValidationMessageFor(model => model.empreporting, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top:2em">
+                    <div class="col-md-2 text-nowrap">
+                        @Html.LabelFor(model => model.empjoindate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.empjoindate, "Joining Date", new { htmlAttributes = new { Placeholder = "Employee Joining Date", @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.empjoindate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.empstatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        <select id="empstatus" name="empstatus" class="form-control" , required="required">
+                            <option selected disabled>--Select Status--</option>
+                            <option>Confirmed</option>
+                            <option>Probabtion</option>
+                            <option>Intern</option>
+                            <option>Consultant</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.empstatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row" style="padding-top:2em">
+                    <div class="col-md-2 text-nowrap">
+                        @Html.LabelFor(model => model.empworklocation, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        <select id="empworklocation" name="empworklocation" class="form-control" required="required">
+                            <option selected disabled>--Select Location--</option>
+                            <option>Gurgaon</option>
+                            <option>Banglore</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.empworklocation, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 text-nowrap">
+                        @Html.LabelFor(model => model.empcategory, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        <select id="empcategory" name="empcategory" class="form-control" , required="required">
+                            <option selected disabled>--Select Category--</option>
+                            <option>Technical</option>
+                            <option>Non-Technical</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.empcategory, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row" style="padding-top:2em">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.empexperience, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.empexperience, new { htmlAttributes = new { Placeholder = "Experience in Years", @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.empexperience, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-center" style="padding-top:1em">
+            <div class="no-color h4 ">
+                <a class="badge badge-pill badge-success" onclick="document.getElementById('SubmitQuery').click();" style="cursor:pointer; color:white">Save</a>
+                <input type="submit" id="SubmitQuery" style="display:none" class="float-right">
+                @Html.ActionLink("Back", "EmployeeInfoDataIndex", new { sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-primary" })
+            </div>
+        </div>
+    </div>
+}
+<div class="text-danger">@ViewBag.errormssg</div>
+@section Scripts
+        {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/EmployeeInfoData")
+}

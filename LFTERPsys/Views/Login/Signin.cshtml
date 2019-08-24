@@ -1,0 +1,120 @@
+﻿  
+@{
+    Layout = null;
+}
+
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/LoginCss/signin-page.css")
+@Styles.Render("~/Content/font-awesome.css")
+@Styles.Render("~/Content/animate")
+
+<style>
+    .field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: 10px;
+  position: relative;
+  z-index: 2;
+}
+</style>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/bootbox")
+@Scripts.Render("~/Scripts/LoginScripts/Signin/forgot.password.js")
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LFTERPsys</title>
+</head> 
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <img src="~/Images/CompanyLogo/gbErpLogo.png" height="60" width="185" />
+                    <div class="d-flex justify-content-end social_icon">
+                        <span onclick="window.open('https://in.linkedin.com/company/logicfruit')"><i class="fa fa-linkedin-square"></i></span>
+                        <span onclick="window.open('https://www.facebook.com/EmbeddedFPGA ')"><i class="fa fa-facebook-square"></i></span>
+                        <span onclick="window.open('https://twitter.com/lofru')"><i class="fa fa-twitter-square"></i></span>
+                        <span onclick="window.open('https://www.youtube.com/channel/UC6OfAs6kgv5CWEMWs9MVH4g')"><i class="fa fa-youtube-square"></i></span>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Signin", "Login", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> &nbsp;<i class="fa fa-user"></i></span>
+                                </div>
+                                <input name="empid" class="form-control input-validation-error" id="empid" type="text" aria-invalid="true" placeholder="Employee ID"
+                                       aria-describedby="empid-error" required="" data-val="true" data-val-required="*Employee ID field is required.">
+                            </div>
+
+                            <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="empid" style="font-size:14px;"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-center"> &nbsp;<i class="fa fa-lock"></i></span>
+                                </div>
+                                <input name="password" class="form-control input-validation-error" id="password" type="password" aria-invalid="true" placeholder="Password"
+                                       aria-describedby="password-error" required="" data-val="true" data-val-required="*Password field is required.">
+                              
+                                    <span class="fa fa-eye-slash field-icon toggle-password" toggle="#password"></span>
+                                   
+                                </div>
+
+                            <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="password" style="font-size:14px;"></span>
+                        </div>
+                        <div class="row align-items-center forgot">
+                            <a href="#" style="color:white;" onclick="ForgotPassword();">Forgot Password? Not Registered</a>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn float-right login_btn">
+                        </div>
+                     }
+                </div>
+                @if (@ViewBag.invalidError != null)
+                {
+                    <p class="text-danger font-weight-bolder text-center">@ViewBag.invalidError</p>
+                    
+                }
+            </div>
+        </div>
+    </div>
+    <div>
+        <footer class="page-footer font-small fixed-bottom" style="background-color:rgba(0,0,0,0.6) !important;">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-right py-1" style="color:white; font-size:12px; padding-right:6px;">
+                © @DateTime.Now.Year 
+                <a href="https://logic-fruit.com/" style="color:white;" target="_blank">Logic Fruit Technologies</a>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+    </div>
+</body>
+</html>
+<script>
+    $(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+</script>
+

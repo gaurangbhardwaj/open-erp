@@ -1,0 +1,122 @@
+﻿@model LFTERPsys.Models.RoleDataModel
+
+@{
+    ViewBag.Title = "Edit Authorization Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/RoleDataCss/bootstrap-multiselect.css")
+
+    <style>
+        .purple-gradient-rgba {
+            background: -webkit-linear-gradient(50deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+            background: -o-linear-gradient(50deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+            background: linear-gradient(40deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+        }
+
+        .body-content {
+            margin: 0px;
+            margin-top: 15px;
+            padding: 0px 0px;
+        }
+
+        .body {
+            padding: 0px 0px;
+        }
+    </style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card gradient-card" style="border:none; ">
+        <div class="card-image" style="background-image: url(/Images/fleximage.jpg)">
+            <!-- Content -->
+            <div class="text-white d-flex mask purple-gradient-rgba">
+                <div class="first-content mx-auto p-4">
+                    <h2 class="card-title">@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-sm-2 text-nowrap">
+                @Html.LabelFor(model => model.rolename, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-sm-4">
+                @Html.HiddenFor(model => model.rolename)
+                <input type="text" value="@Model.rolename" class="form-control" style="max-width:none" disabled="disabled" />
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-sm-2 text-nowrap">
+                @Html.LabelFor(model => model.pageaccess, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.HiddenFor(model => model.pageaccess)
+            </div>
+            <div class="col-sm-4">
+                <select id="multiselect" name="multiselect" class="form-control" required="required" multiple="multiple">
+                    <optgroup label="Employee Info Data">
+                        <option id="EmployeeInfoDataIndex" value="EmployeeInfoDataIndex">View Employees</option>
+                        <option id="EmployeeInfoDataCreate" value="EmployeeInfoDataCreate">Add Employees</option>
+                        <option id="EmployeeInfoDataDetails" value="EmployeeInfoDataDetails">Employee Details</option>
+                        <option id="EmployeeInfoDataEdit" value="EmployeeInfoDataEdit">Edit Employee</option>
+                        <option id="EmployeeInfoDataDelete" value="EmployeeInfoDataDelete">Delete Employees</option>
+                        <option id="DepartmentData" value="DepartmentData">Modify Department</option>
+                        <option id="DesignationData" value="DesignationData">Modify Designation</option>
+                        <option id="DivisionData" value="DivisionData">Modify Division</option>
+                    </optgroup>
+                    <optgroup label="Project Info Data">
+                        <option id="ProjectDataIndex" value="ProjectDataIndex">View Projects</option>
+                        <option id="ProjectDataCreate" value="ProjectDataCreate">Add Projects</option>
+                        <option id="ProjectDataEdit" value="ProjectDataEdit">Edit Projecs</option>
+                        <option id="ProjectDataDelete" value="ProjectDataDelete">Delete Projects</option>
+                        <option id="ProjectCategoryData" value="ProjectCategoryData">Modify Project Categories</option>
+                    </optgroup>
+                    <optgroup label="EOS Data">
+                        <option id="MyEos" value="MyEos">My Eos</option>
+                        <option id="AllEmployeesEos" value="AllEmployeesEos">All Employees Eos</option>
+                    </optgroup>
+                    <optgroup label="To Publish">
+                        <option id="CalendarData" value="CalendarData">Calendar</option>
+                        <option id="AnnouncementDataIndex" value="AnnouncementDataIndex">View Announcements</option>
+                        <option id="AnnouncementDataCreate" value="AnnouncementDataCreate">Publish Annoucements</option>
+                        <option id="AnnouncementDataEdit" value="AnnouncementDataEdit">Edit Annoucements</option>
+                        <option id="AnnouncementDataDelete" value="AnnouncementDataDelete">Delete Annoucements</option>
+                    </optgroup>
+                    <optgroup label="Generate Report">
+                        <option id="CurrentMonthReport" value="CurrentMonthReport">Monthly Report</option>
+                        <option id="CustomReport" value="CustomReport">Custom Report</option>
+                    </optgroup>
+                    <optgroup label="User Login">
+                        <option id="EmployeeLoginData" value="EmployeeLoginData">Modify User Login</option>
+                    </optgroup>
+                </select>
+
+                @Html.ValidationMessageFor(model => model.pageaccess, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="form-actions h4 text-center" style="padding-top:1em">
+            <a class="badge badge-pill badge-success" onclick="getsetpageaccess(); document.getElementById('SubmitQuery').click();" style="cursor:pointer; color:white">Save</a>
+            <input type="submit" id="SubmitQuery" style="display:none" class="float-right">
+            @Html.ActionLink("Back", "RoleDataIndex", new { sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-primary" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/RoleData")
+}
+
+<script>
+    var selectedoptions = document.getElementById("pageaccess").value.split(',');
+    for (let i = 0; i < selectedoptions.length; i++)
+        document.getElementById(selectedoptions[i]).selected = true;
+</script>

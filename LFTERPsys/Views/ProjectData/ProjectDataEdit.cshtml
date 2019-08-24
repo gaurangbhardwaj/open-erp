@@ -1,0 +1,115 @@
+﻿@model LFTERPsys.Models.ProjectDataModel
+
+@{
+    ViewBag.Title = "Edit Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/select2css")
+<style>
+    .purple-gradient-rgba {
+        background: -webkit-linear-gradient(50deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+        background: -o-linear-gradient(50deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+        background: linear-gradient(40deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+    }
+
+    .body-content {
+        margin: 0px;
+        margin-top: 15px;
+        padding: 0px 0px;
+    }
+
+    .body {
+        padding: 0px 0px;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card gradient-card" style="border:none; ">
+        <div class="card-image" style="background-image: url(/Images/fleximage.jpg)">
+            <!-- Content -->
+            <div class="text-white d-flex mask purple-gradient-rgba">
+                <div class="first-content mx-auto p-4">
+                    <h2 class="card-title">@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-md-2 text-nowrap">
+                @Html.LabelFor(model => model.projid, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.projid, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"  } })
+                @Html.ValidationMessageFor(model => model.projid, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-md-2 text-nowrap">
+                @Html.LabelFor(model => model.projname, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.projname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.projname, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-md-2 text-nowrap">
+                @Html.LabelFor(model => model.erpprojname, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.erpprojname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.erpprojname, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-md-2 text-nowrap">
+                @Html.LabelFor(model => model.depname, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.depname, (IEnumerable<SelectListItem>)ViewBag.AllDepartmentName, new { @class = "form-control search-box", required = "required" })
+                @Html.ValidationMessageFor(model => model.depname, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="row" style="padding-top:2em">
+            <div class="col-md-3"></div>
+            <div class="col-md-2 text-nowrap">
+                @Html.LabelFor(model => model.projstatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("projstatus", (IEnumerable<SelectListItem>)ViewBag.AllProjectStatus, new { @class = "form-control search-box", required = "required" })
+                @Html.ValidationMessageFor(model => model.projstatus, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div>
+            <div class="form-actions no-color text-center h4" style="padding:1em">
+                <a class="badge badge-pill badge-success" onclick="(this).closest('form').submit();" style="cursor:pointer; color:white">Update</a>
+                @Html.ActionLink("Back", "ProjectDataIndex", new { sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-primary" })
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

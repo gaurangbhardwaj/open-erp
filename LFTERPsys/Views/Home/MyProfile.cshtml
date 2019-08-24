@@ -1,0 +1,199 @@
+﻿@model LFTERPsys.Models.EmployeeInfoDataModel
+@{
+    ViewBag.Title = "My Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    DateTime expcnt = DateTime.Parse((Model.empjoindate).ToString().Trim());
+    string companyexp = ((DateTime.Now.Year - expcnt.Year)) + "." + Math.Abs(DateTime.Now.Month - expcnt.Month);
+}
+
+@Styles.Render("~/Content/SharedCss/profile-page.css")
+<style>
+    .body-content {
+        margin: 0px;
+        margin-top: 15px;
+        padding: 0px 0px;
+    }
+
+    .body {
+        padding: 0px 0px;
+    }
+</style>
+<div class="card gradient-card" style="border:none; ">
+    <div class="card-image" style="background-image: url(/Images/fleximage.jpg)">
+        <!-- Content -->
+        <div class="text-white d-flex mask aqua-gradient-rgba">
+            <div class="first-content mx-auto p-4">
+                <h2 class="card-title">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container emp-profile">
+    <div class="row">
+        <div class="col-md-4" style="padding-top:2em;">
+            <div class="profile-img">
+                @if (Model.empphoto != null)
+                {
+                    <img src="data:image;base64,@System.Convert.ToBase64String(Model.empphoto)" class="rounded-circle img-thumbnail" />
+                }
+                else
+                {
+                    <img id="profileImage" src="~/Images/ProfileImageAvatar/avatar.png" class="avatar rounded-circle img-thumbnail" alt="avatar" width="40" , height="40" />
+                }
+            </div>
+        </div>
+
+        <div class="col-md-8" style="padding-top:2em;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="profile-head text-nowrap">
+                        <h3>
+                            @Html.DisplayFor(model => model.empname)
+                        </h3>
+                        <h6>
+                            @Html.DisplayFor(model => model.desgname)
+                        </h6>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">More Info</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empid)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.empid)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empstatus)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.empstatus)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empexperience)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @(Convert.ToDecimal(Model.empexperience) + Convert.ToDecimal(companyexp))
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.divname)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.divname)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.depname)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.depname)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.desgname)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.desgname)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empreporting)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.empreporting)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empjoindate)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.empjoindate)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empexitdate)
+                        </div>
+
+                        @if (Model.empexitdate != null)
+                        {
+                            <div class="col-md-6">
+
+                                @Html.DisplayFor(model => model.empexitdate)
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6">
+                                <p>  N/A </p>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empcategory)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.empcategory)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DisplayNameFor(model => model.empworklocation)
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                @Html.DisplayFor(model => model.empworklocation)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

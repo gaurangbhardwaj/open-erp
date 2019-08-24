@@ -1,0 +1,96 @@
+﻿tbody .fc-sun {
+    background-color: #bad0f6;
+}
+
+tbody .fc-sat {
+    background-color: #bad0f6;
+}
+
+.a:not([href]):not([tabindex]) {
+    color: white;
+}
+
+.fc-left .fc-prev-button, .fc-left .fc-next-button, .fc-left .fc-today-button {
+    background-color: #2872c6;
+    color: white;
+    background-image: none;
+    border: none;
+}
+
+.fc-right .fc-month-button, .fc-right .fc-basicWeek-button, .fc-right .fc-list-button {
+    background-color: #2872c6;
+    color: white;
+    background-image: none;
+    border: none;
+}
+
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
+#calender {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ddd;
+}
+
+.input-color {
+    position: relative;
+}
+
+    .input-color p {
+        padding-left: 20px;
+        margin:0px;
+        font-size:13px;
+    }
+
+.colorboxblue {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    position: absolute;
+    background-color: #bad0f6;
+    left: 5px;
+    top: 6px;
+}
+.colorboxred {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    position: absolute;
+    background-color: #ff9907;
+    left: 5px;
+    top: 6px;
+}
+.colorboxgreen {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    position: absolute;
+    background-color: #28a788;
+    left: 5px;
+    top: 6px;
+}
+.colorboxpink {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    position: absolute;
+    background-color: #ffc0cb;
+    left: 5px;
+    top: 6px;
+}
+
+@media(max-width: 720px)
+{
+    #calender{
+        width: auto;
+        border:none;
+       
+    }
+
+    
+}

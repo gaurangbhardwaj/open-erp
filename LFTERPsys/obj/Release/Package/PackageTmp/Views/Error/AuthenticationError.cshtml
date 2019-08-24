@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Not Authorized";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+
+    .error-template {
+        padding: 40px 15px;
+        text-align: center;
+    }
+
+    .error-actions {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+        .error-actions .btn {
+            margin-right: 10px;
+        }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <img src="~/Images/AuthenticationError.png" height="200" width="200">
+                <br /><br />
+                <h2>
+                    Authentication Error
+                </h2>
+                <div class="error-details">
+                    Sorry, you are not authorized to access this page!
+                    for further query report to admin.
+                </div>
+                <hr />
+                <div class="error-actions">
+                    <a href="/Home/Home/@ViewBag.SessionID" class="btn btn-primary btn-lg">
+                        <span class="fa fa-home"></span>
+                        Take me Home
+                    </a><a href="/Login/Signin" class="btn btn-primary btn-lg"><span class="fa fa-sign-in"></span> Login </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
