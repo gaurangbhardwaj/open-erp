@@ -1,0 +1,87 @@
+﻿@model LFTERPsys.Models.DepartmentDataModel
+
+@{
+    ViewBag.Title = "Departments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .input-group :focus {
+        box-shadow: none;
+    }
+</style>
+@{
+    bool errorcheck()
+    {
+        return (Html.ValidationMessageFor(model => model.depname) != null && !string.IsNullOrEmpty(Html.ValidationMessageFor(model => model.depname).ToString()));
+    }
+}
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/animate")
+<h2 style="text-align:center">Department List</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group">
+                    @Html.EditorFor(model => model.depname, new { htmlAttributes = new { @class = "form-control py-2 border-right-0 border", style = "border-radius: 30px 0px 0px 30px;", placeholder = "Department", required = "required" } })
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" style="border-radius: 0px 30px 30px 0px;" onclick="document.getElementById('Error').value = @errorcheck()">Add</button>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.depname, "", new { @class = "text-danger" })
+            }
+        </div>
+        <div class="col-md-6">
+            <div class="form-inline" style="float:right">
+                <div class="input-group">
+                    <input type="text" class="form-control py-2 border-right-0 border" id="SearchBox" style="border-radius: 30px 0px 0px 30px;" placeholder="Search Department">
+                    <div class="input-group-append">
+                        <div class="input-group-text bg-transparent" style="border-radius: 0px 30px 30px 0px;">
+                            <i class='fa fa-search'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    @Html.Hidden("SessionID", new { @Value = ViewBag.SessionID })
+    <form method="post" return false;">
+        @Html.AntiForgeryToken()
+        <input id="DepNames" name="DepNames" type="hidden" value="@ViewBag.Depnames" />
+        <table class="table" id="Departments">
+            <tr>
+                <th class="col-md-6">
+                    @Html.DisplayNameFor(model => model.depname)
+                </th>
+                <th class="col-md-6"></th>
+            </tr>
+            <tbody id="items">
+                @foreach (var item in ViewBag.Depnames)
+                {
+                    <tr>
+                        <td class="col-md-6">
+                            @item
+                        </td>
+                        <td class="col-md-6">
+                            <a href="#" class="badge badge-pill badge-danger" id="DepartmentDelete" style="float:right">Delete</a>
+                            <!--Html.ActionLink("Delete", "DepartmentDataDelete", new { sessionid = ViewBag.SessionID, id = item.sno }, new { onclick = "return confirm('Are sure wants to delete?');", class = "badge badge-pill badge-danger" })-->
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+<div class="text-danger">@ViewBag.errormssg</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootbox")
+    @Scripts.Render("~/Scripts/DepartmentDataScripts/mvc.operations.js")
+    @Scripts.Render("~/Scripts/SharedScripts/tableitem.search.js")
+}

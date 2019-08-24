@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - LFTERPsys</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/font-awesome")
+    @Styles.Render("~/Content/LayoutCss/layout-style.css")
+</head>
+
+<body>
+    @{
+        LFTERPsys.Models.EmployeeInfoDataDbContext employeeInfoDataDbContext = new LFTERPsys.Models.EmployeeInfoDataDbContext();
+        LFTERPsys.Models.RoleDataDbContext roleDataDbContext = new LFTERPsys.Models.RoleDataDbContext();
+        string emprole = null;
+        string[] pages = null;
+
+
+        if (Session["LoggedEmpID" + ViewBag.SessionID] != null)
+        {
+            emprole = Session["LoggedEmpRole" + ViewBag.SessionID];
+            LFTERPsys.Models.RoleDataModel roleDataModel = roleDataDbContext.RoleDataDbSet.Where(model => model.rolename.Equals(emprole)).FirstOrDefault();
+            pages = (roleDataModel.pageaccess).Split(',');
+        }
+    }
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" style="background-color:rgba(240,255,240,0.9) !important;">
+        <a class="navbar-brand" href="/Home/Home/@ViewBag.SessionID"><img src="~/Images/CompanyLogo/LFT-Logo.png" width="120" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                @if (Session["LoggedEmpID" + ViewBag.SessionID] != null)
+                {
+                    <li class="nav-item active">
+                        @Html.ActionLink("Home", "Home", "Home", new { sessionid = ViewBag.SessionID }, new { @class = "nav-link" })
+                    </li>
+                    if (pages.Contains("EmployeeInfoDataIndex") || pages.Contains("AllEmployeesEOS") || pages.Contains("DesignationData") || pages.Contains("DepartmentData") || pages.Contains("DivisionData"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Employee
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                @if (pages.Contains("EmployeeInfoDataIndex"))
+                                {
+                                    <a href="/EmployeeInfoData/EmployeeInfoDataIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-address-card" aria-hidden="true"></i> Employees List</a>
+                                }
+                                @if (pages.Contains("AllEmployeesEos"))
+                                {
+                                    <a href="/EosData/AllEmployeesEOS/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-clock-o" aria-hidden="true"></i> Employees EOS</a>
+                                }
+                                @if (pages.Contains("DesignationData"))
+                                {
+                                    <a href="/DesignationData/DesignationDataIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-briefcase" aria-hidden="true"></i> Designations</a>
+                                }
+                                @if (pages.Contains("DepartmentData"))
+                                {
+                                    <a href="/DepartmentData/DepartmentDataIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-building"></i> Departments</a>
+                                }
+                                @if (pages.Contains("DivisionData"))
+                                {
+                                    <a href="/DivisionData/DivisionDataIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-building-o"></i> Divisions</a>
+                                }
+                            </div>
+                        </li>
+                    }
+
+                    if (pages.Contains("ProjectDataIndex"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ProjectData/ProjectDataIndex/@ViewBag.SessionID">
+                                Project
+                            </a>
+                         
+                        </li>
+                    }
+
+                    if (pages.Contains("CalendarData") || pages.Contains("AnnouncementDataIndex"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Happenings
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                @if (pages.Contains("CalendarData"))
+                                {
+                                    <a href="/Calendar/CalendarIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Calendar</a>
+                                }
+                                @if (pages.Contains("AnnouncementDataIndex"))
+                                {
+                                    <a href="/AnnouncementData/AnnouncementDataIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Announcement</a>
+                                }
+                            </div>
+                        </li>
+                    }
+
+                    if (pages.Contains("CurrentMonthReport") || pages.Contains("CustomReport"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Generate Report
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                @if (pages.Contains("CurrentMonthReport"))
+                                {
+                                    <a href="/GenerateReport/CurrentMonthReport/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-area-chart" aria-hidden="true"></i> @DateTime.Now.ToString("MMMM")'s Report</a>
+                                }
+                                @if (pages.Contains("CustomReport"))
+                                {
+                                    <a href="/GenerateReport/CustomReport/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-area-chart" aria-hidden="true"></i> Custom Report</a>
+                                }
+                            </div>
+                        </li>
+                    }
+
+                    if (emprole.Equals("superuser") || pages.Contains("EmployeeLoginData"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                User Login
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                @if (pages.Contains("EmployeeLoginData"))
+                                {
+                                    <a href="/EmployeeLoginData/EmployeeLoginDataIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-user" aria-hidden="true"></i>All Users</a>
+                                }
+                                @if (emprole.Equals("superuser"))
+                                {
+                                    <a href="/RoleData/RoleDataIndex/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-user-secret" aria-hidden="true"></i>All Roles</a>
+                                }
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+            <ul class="navbar-nav">
+                @if (Session["LoggedEmpID" + ViewBag.SessionID] != null)
+                {
+                    string sessionid = Session["LoggedEmpID" + ViewBag.SessionID].ToString();
+                    var LoggedEmpDetails = employeeInfoDataDbContext.EmployeeInfoDataDbSet.Where(model => model.empid.Equals(sessionid)).FirstOrDefault();
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @if (LoggedEmpDetails.empphoto != null)
+                            {
+                                <img src="data:image;base64,@System.Convert.ToBase64String(LoggedEmpDetails.empphoto)" class="rounded-circle img-fluid" title="@LoggedEmpDetails.empname" />
+                            }
+                            else
+                            {
+                                <img id="profileImage" src="~/Images/ProfileImageAvatar/avatar.png" class="avatar rounded-circle img-fluid" title="@LoggedEmpDetails.empname" />
+                            }
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a href="/Home/MyProfile/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-user" aria-hidden="true"></i> My Profile</a>
+                            <a href="/Login/ChangePassword/@ViewBag.SessionID" class="text-nowrap dropdown-item"><i class="fa fa-lock" aria-hidden="true"></i> Change Password</a>
+                            <a href="/Home/Logout/@ViewBag.SessionID" class="dropdown-item"><i class="fa fa-power-off" style="color:red" aria-hidden="true"></i> Logout</a>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    <div>
+        <footer class="page-footer font-small fixed-bottom" style="background-color:rgba(240,255,240,0.9) !important;">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-right py-1" style="color:black; font-size:12px; padding-right:6px;">
+                © @DateTime.Now.Year
+                <a href="https://github.com/gaurangbrd" style="color:black" target="_blank">GB ERPsys</a>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "Custom Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.CustomReport == null)
+{
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <hr />
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="container">
+            <div class="row" style="padding-top:2em">
+                <div class="col-md-3"></div>
+                <div class="col-sm-2 text-nowrap">
+                    <p class="control-label col-md-2">Financial Year</p>
+                </div>
+                <div class="col-sm-4">
+                    <select id="fyear" name="fyear" class="form-control" required data-val-required="The Financial Year field is required." data-val="true">
+                        <option selected disabled>-- Select Financial Year --</option>
+                        @foreach (var years in ViewBag.AllFinancialYears)
+                        {
+                            <option value="@years">@years</option>
+                        }
+                    </select>
+                    <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="fyear"></span>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <div class="row" style="padding-top:2em">
+                <div class="col-md-3"></div>
+                <div class="col-sm-2 text-nowrap">
+                    <p class="control-label col-md-2">Financial Month</p>
+                </div>
+                <div class="col-sm-4">
+                    <select id="fmonth" name="fmonth" class="form-control" required data-val-required="The Financial Month field is required." data-val="true">
+                        <option selected disabled>-- Select Financial Month --</option>
+                        @{
+                            foreach (var months in ViewBag.AllFinancialMonths)
+                            {
+                                string month = char.ToUpper(months[0]) + months.Substring(1);
+                                <option value="@months">@month</option>
+                            }
+                        }
+                    </select>
+                    <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="fmonth"></span>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <div class="form-actions h4 text-center" style="padding-top:1em">
+                <a class="badge badge-pill badge-success" onclick="document.getElementById('SubmitQuery').click();" style="cursor:pointer; color:white">Generate Report</a>
+                <input type="submit" id="SubmitQuery" style="display:none" class="float-right">
+            </div>
+        </div>
+    }
+    @section Scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+else
+{
+    string custommonth = char.ToUpper(ViewBag.CustomMonth[0]) + ViewBag.CustomMonth.Substring(1);
+    <h2 class="text-center">@custommonth's EOS Report: @ViewBag.CustomYear</h2>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 text-left h4">
+                <a class="badge badge-pill badge-primary" href="/GenerateReport/CustomReport/@ViewBag.SessionID" id="EnrollNew" color:white">Back</a>
+            </div>
+
+            <div class="col-md-6 text-right h4">
+                <a class="badge badge-pill badge-secondary" id="ExportReportbtn" onclick="document.getElementById('btnSubmit').click();" style="cursor:pointer; color:white">Export Report</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="reportGrid">
+        <table class="table" id="report">
+            <tr>
+                <td></td>
+                <td></td>
+                @for (int i = 0; i < ViewBag.CustomReport.GetLength(1) - 1; i++)
+                {
+                    <td class="font-weight-bolder"></td>
+                }
+            </tr>
+            @for (int i = 0; i < ViewBag.CustomReport.GetLength(0); i++)
+            {
+                <tr>
+                    @for (int j = 0; j < ViewBag.CustomReport.GetLength(1); j++)
+                    {
+                        if (i == 1 && j == 0)
+                        {
+                            <td style="color:brown; font-weight:bold">S.no#</td>
+                            <td style="color:brown; font-weight:bold">Project Name</td>
+                        }
+                        else
+                        {
+                            if (i > 1 && j == 0)
+                            {
+                                <td style="font-weight:bold; color:orangered">
+                                    @(i - 1)
+                                </td>
+                                <td style="font-weight:bold; color:darkcyan">
+                                    @ViewBag.CustomReport[i, j]
+                                </td>
+                            }
+                            else if (i <= 1)
+                            {
+                                if (j == 0)
+                                {
+                                    <td></td>
+                                }
+                                <td style="font-weight:bold; color:darkslateblue">
+                                    @ViewBag.CustomReport[i, j]
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @ViewBag.CustomReport[i, j]
+                                </td>
+                            }
+
+                        }
+
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+
+    using (Html.BeginForm("Export", "GenerateReport", FormMethod.Post))
+    {
+        <input type="hidden" name="GridHtml" />
+        <input type="submit" id="btnSubmit" value="Export" style="display:none;" />
+    }
+
+    @section Scripts{
+        @Scripts.Render("~/Scripts/GenerateReportScripts/Shared/report.colorscheme.js")
+    }
+
+}
+

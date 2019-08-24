@@ -1,0 +1,386 @@
+﻿@model IEnumerable<LFTERPsys.Models.RoleDataModel>
+
+@{
+    ViewBag.Title = "All Role's Access";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/animate")
+
+<style>
+    .input-group :focus {
+        box-shadow: none;
+    }
+
+    .fa-check-circle-o{
+        color:green;
+        font-size:20px;
+    }
+
+    .fa-times-circle-o{
+        color:red;
+        font-size:20px;
+    }
+</style>
+
+@Html.Hidden("SessionID", new { @Value = ViewBag.SessionID })
+@Html.AntiForgeryToken()
+
+<div class="container-fluid" style="position:fixed">
+    <div class="text-center h2">
+        All Role's Access
+    </div>
+    <br />
+    <div class="input-group">
+        <div class="col-md-3"></div>
+        <input type="text" class="form-control col-md-6 border-right-0 border" id="SearchBox" style="border-radius: 30px 0px 0px 30px;" placeholder="Search by Role Name">
+        <div class="input-group-append">
+            <div class="input-group-text bg-transparent" style="border-radius: 0px 30px 30px 0px;">
+                <i class='fa fa-search'></i>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 h5">
+            @Html.ActionLink("Add New Role", "RoleDataCreate", new { sessionid = ViewBag.SessionID }, htmlAttributes: new { @class = "badge badge-pill badge-primary", @style = "line-height:1.5;" })
+        </div>
+    </div>
+</div>
+<br /><br /> <br /><br />
+<br /><br />
+<div class="container-fluid">
+    <div class="row text-nowrap">
+        <table class="table" id="Role">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.rolename)
+                </th>
+                <th>
+                    View Employees
+                </th>
+                <th>
+                    Add Employees
+                </th>
+                <th>
+                    Edit Employees
+                </th>
+                <th>
+                    Employee Details
+                </th>
+                <th>
+                    Delete Employees
+                </th>
+                <th>
+                    Modify Departments
+                </th>
+                <th>
+                    Modify Designations
+                </th>
+                <th>
+                    Modify Division
+                </th>
+                <th>
+                    View Projects
+                </th>
+                <th>
+                    Add Projects
+                </th>
+                <th>
+                    Edit Projects
+                </th>
+                <th>
+                    Delete Projects
+                </th>
+                <th>
+                    Modify Project Categories
+                </th>
+                <th>
+                    Modify Calendar
+                </th>
+                <th>
+                    View Announcements
+                </th>
+                <th>
+                    Publish Announcements
+                </th>
+                <th>
+                    Edit Announcements
+                </th>
+                <th>
+                    Delete Announcements
+                </th>
+                <th>
+                    My Eos
+                </th>
+                <th>
+                    All Employees Eos
+                </th>
+                <th>
+                    Monthly Report
+                </th>
+                <th>
+                    Custom Report
+                </th>
+                <th>
+                    Modify User Login
+                </th>
+                <th></th>
+            </tr>
+            <tbody id="items">
+                @foreach (var item in Model)
+                {
+                    string[] pages = (item.pageaccess).Split(',');
+                    <tr class="text-center">
+                        <td class="font-weight-bold text-left text-capitalize" style="color:darkblue">
+                            @Html.DisplayFor(modelItem => item.rolename)
+                        </td>
+                        <td>
+                            @if (pages.Contains("EmployeeInfoDataIndex"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("EmployeeInfoDataCreate"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("EmployeeInfoDataEdit"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("EmployeeInfoDataDetails"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("EmployeeInfoDataDelete"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("DepartmentData"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("DesignationData"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("DivisionData"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("ProjectDataIndex"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("ProjectDataCreate"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("ProjectDataEdit"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("ProjectDataDelete"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("ProjectCategoryData"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("CalendarData"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("AnnouncementDataIndex"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("AnnouncementDataCreate"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("AnnouncementDataEdit"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("AnnouncementDataDelete"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("MyEos"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("AllEmployeesEos"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("CurrentMonthReport"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("CustomReport"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td>
+                            @if (pages.Contains("EmployeeLoginData"))
+                            {
+                                <p><i class="fa fa-check-circle-o"></i></p>
+                            }
+                            else
+                            {
+                                <p><i class="fa fa-times-circle-o"></i></p>
+                            }
+                        </td>
+                        <td class="center text-right">
+                            @Html.ActionLink("Edit", "RoleDataEdit", new { id = item.rolename, sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-success" })
+                            <a href="#" class="badge badge-pill badge-danger" id="RoleDelete">Delete</a>
+                        </td>
+                    </tr>
+
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootbox")
+    @Scripts.Render("~/Scripts/RoleDataScripts/RoleDataIndex/mvc.operations.js")
+    @Scripts.Render("~/Scripts/SharedScripts/tableitem.search.js")
+}

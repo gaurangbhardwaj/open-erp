@@ -1,0 +1,84 @@
+﻿@model LFTERPsys.Models.DivisionDataModel
+
+@{
+    ViewBag.Title = "Divisions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .input-group :focus {
+        box-shadow: none;
+    }
+</style>
+@{
+    bool errorcheck()
+    {
+        return (Html.ValidationMessageFor(model => model.divname) != null && !string.IsNullOrEmpty(Html.ValidationMessageFor(model => model.divname).ToString()));
+    }
+}
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/animate")
+<h2 style="text-align:center">Divisions List</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group">
+                    @Html.EditorFor(model => model.divname, new { htmlAttributes = new { @class = "form-control py-2 border-right-0 border", style = "border-radius: 30px 0px 0px 30px;", placeholder = "Division", required = "required" } })
+                    <div class="input-group-prepend">
+                        @Html.Hidden("Error")
+                        <button class="btn btn-primary" style="border-radius: 0px 30px 30px 0px;" id="AddNewDivision" type="submit" onclick="document.getElementById('Error').value = @errorcheck()">Add</button>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.divname, "", new { @class = "text-danger" })
+            }
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline" style="float:right">
+                <div class="input-group">
+                    <input type="text" class="form-control py-2 border-right-0 border" id="SearchBox" style="border-radius: 30px 0px 0px 30px;" placeholder="Search Division">
+                    <div class="input-group-append">
+                        <div class="input-group-text bg-transparent" style="border-radius: 0px 30px 30px 0px;">
+                            <i class='fa fa-search'></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    @Html.Hidden("SessionID", new { @Value = ViewBag.SessionID })
+    <form method="post" return false;">
+        @Html.AntiForgeryToken()
+        <input id="DivNames" name="DivNames" type="hidden" value="@ViewBag.Divnames" />
+        <table class="table" id="Divisions">
+            <tr>
+                <th class="col-md-6">
+                    @Html.DisplayNameFor(model => model.divname)
+                </th>
+                <th class="col-md-6"></th>
+            </tr>
+            <tbody id="items">
+                @foreach (var item in ViewBag.Divnames)
+                {
+                    <tr>
+                        <td class="col-md-6">
+                            @item
+                        </td>
+                        <td class="col-md-6">
+                            <a href="#" class="badge badge-pill badge-danger" style="float:right" id="DivisionDelete">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootbox")
+    @Scripts.Render("~/Scripts/DivisionDataScripts/mvc.operations.js")
+    @Scripts.Render("~/Scripts/SharedScripts/tableitem.search.js")
+}

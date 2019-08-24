@@ -1,0 +1,147 @@
+﻿@model IEnumerable<LFTERPsys.Models.EmployeeInfoDataModel>
+
+@{
+    ViewBag.Title = "Employee Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ string emprole = Session["LoggedEmpRole" + ViewBag.SessionID]; Boolean add, edit, details, delete; using (LFTERPsys.Models.RoleDataDbContext roleDataDbContext = new LFTERPsys.Models.RoleDataDbContext()) { LFTERPsys.Models.RoleDataModel roleDataModel = roleDataDbContext.RoleDataDbSet.Where(model => model.rolename.Equals(emprole)).FirstOrDefault(); string[] pages = (roleDataModel.pageaccess).Split(','); add = (pages.Contains("EmployeeInfoDataCreate")); details = (pages.Contains("EmployeeInfoDataDetails")); edit = (pages.Contains("EmployeeInfoDataEdit")); delete = (pages.Contains("EmployeeInfoDataDelete")); } }
+
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/SharedCss/dataTables.css")
+@Styles.Render("~/Content/SharedCss/gradients.css")
+
+    <style>
+        .center {
+            padding: 10px 0;
+        }
+
+        .input-group :focus {
+            box-shadow: none;
+        }
+
+   
+        .body-content {
+            margin: 0px;
+            margin-top: 15px;
+            padding: 0px 0px;
+        }
+
+        .body {
+            padding: 0px 0px;
+        }
+
+</style>
+
+<div class="card gradient-card" style="border:none; ">
+    <div class="card-image" style="background-image: url(/Images/fleximage.jpg)">
+        <!-- Content -->
+        <div class="text-white d-flex mask dusty-grass-gradient">
+            <div class="first-content mx-auto p-4">
+                <h2 class="card-title">All Employees List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="container-fluid">
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th class="sorting_asc_disabled sorting_desc_disabled">
+                   
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.empid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.empname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.divname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.desgname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.empreporting)
+                </th>
+                <th>
+                    @if (add)
+                    {
+                        @Html.ActionLink("Add New Employee", "EmployeeInfoDataCreate", new { sessionid = ViewBag.SessionID }, htmlAttributes: new { @class = "badge badge-pill badge-primary", @style = "line-height:1.5; width:150px;" })
+                    }
+                    </th>
+            </tr>
+        </thead>
+        <tbody id="items">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.empphoto != null)
+                        {
+                            <img src="data:image;base64,@System.Convert.ToBase64String(item.empphoto)" class="rounded-circle" width="50" height="50" />
+                        }
+                        else
+                        {
+                            <img id="profileImage" src="~/Images/ProfileImageAvatar/avatar.png" class="avatar rounded-circle" width="50" height="50" />
+                        }
+                    </td>
+                    <td>
+                        <div class="center">
+                            @Html.DisplayFor(modelItem => item.empid)
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="center">
+                            @Html.DisplayFor(modelItem => item.empname)
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="center">
+                            @Html.DisplayFor(modelItem => item.divname)
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="center">
+                            @Html.DisplayFor(modelItem => item.desgname)
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="center">
+                            @Html.DisplayFor(modelItem => item.empreporting)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="center text-nowrap">
+                            @if (edit)
+                            {
+                                @Html.ActionLink("Edit", "EmployeeInfoDataEdit", new { id = item.empid, sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-success" })
+                            }
+
+                            @if (details)
+                            {
+                                @Html.ActionLink("Profile", "EmployeeInfoDataDetails", new { id = item.empid, sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-primary" })
+                            }
+
+                            @if (delete)
+                            {
+                                @Html.ActionLink("Delete", "EmployeeInfoDataDelete", new { id = item.empid, sessionid = ViewBag.SessionID }, new { @class = "badge badge-pill badge-danger" })
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/EmployeeInfoDataScripts/paging.js")
+    @Scripts.Render("~/bundles/Paging")
+}

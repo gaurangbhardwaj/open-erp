@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "CurrentMonthReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int validateyear;
+    if (DateTime.Now.Month >= 1 && DateTime.Now.Month <= 3)
+    {
+        validateyear = (Convert.ToInt32(DateTime.Now.ToString("yyyy")) - 1);
+    }
+    else
+    {
+        validateyear = DateTime.Now.Year;
+    }
+}
+
+<h2 class="text-center">@DateTime.Now.ToString("MMMM")'s EOS Report: @validateyear-@(validateyear + 1)</h2>
+<br />
+<div class="text-right h4">
+    <a class="badge badge-pill badge-secondary" id="ExportReportbtn" onclick="document.getElementById('btnSubmit').click();" style="cursor:pointer; color:white">Export Report</a>
+</div>
+<div id="reportGrid">
+    <table class="table" id="report">
+        <tr>
+            <td></td>
+            <td></td>
+            @for (int i = 0; i < ViewBag.CurrentMonthReport.GetLength(1)-1; i++)
+            {
+                <td class="font-weight-bolder"></td>
+            }
+        </tr>
+        @for (int i = 0; i < ViewBag.CurrentMonthReport.GetLength(0); i++)
+        {
+            <tr>
+                @for (int j = 0; j < ViewBag.CurrentMonthReport.GetLength(1); j++)
+                {
+                    if (i == 1 && j == 0)
+                    {
+                        <td style="color:brown; font-weight:bold">S.no#</td>
+                        <td style="color:brown; font-weight:bold">Project Name</td>
+                    }
+                    else
+                    {
+                        if (i > 1 && j == 0)
+                        {
+                            <td style="font-weight:bold; color:orangered">
+                                @(i-1)
+                            </td>
+                            <td style="font-weight:bold; color:darkcyan">
+                                @ViewBag.CurrentMonthReport[i, j]
+                            </td>
+                        }
+                        else if (i <= 1)
+                        {
+                            if(j==0)
+                            {
+                                <td></td>
+                            }
+                            <td style="font-weight:bold; color:darkslateblue">
+                                @ViewBag.CurrentMonthReport[i, j]
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @ViewBag.CurrentMonthReport[i, j]
+                            </td>
+                        }
+
+                    }
+
+                }
+            </tr>
+        }
+    </table>
+</div>
+
+@using (Html.BeginForm("Export", "GenerateReport", FormMethod.Post))
+{
+    <input type="hidden" name="GridHtml" />
+    <input type="submit" id="btnSubmit" value="Export" style="display:none;" />
+}
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/GenerateReportScripts/Shared/report.colorscheme.js")
+}

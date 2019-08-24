@@ -1,0 +1,375 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/HomeStyle")
+@Styles.Render("~/Content/CalendarStyle")
+<link href="~/Content/HomeCss/CalendarCss/fullcalendar.print.css" rel="stylesheet" media="print" />
+
+<body id="body">
+    @{
+        LFTERPsys.Models.CalendarDbContext db = new LFTERPsys.Models.CalendarDbContext();
+        LFTERPsys.Models.AnnouncementDataDbContext announcementDataDbContext = new LFTERPsys.Models.AnnouncementDataDbContext();
+    }
+    <div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-10" style="padding-left:0px; padding-right:0px;">
+                    @if (Session["LoggedEmpID" + ViewBag.SessionID] != null)
+                    {
+                        <!--==========================
+                        Intro Section
+                        ============================-->
+                        <section id="intro">
+                            <div class="intro-content">
+                                <div>
+                                    <a href="#" class="btn-get-started scrollto">Quick Tour</a>
+                                    <a href="/EosData/MyEos/@ViewBag.SessionID" class="btn-projects scrollto">My EOS</a>
+                                </div>
+                            </div>
+                            <div id="intro-carousel" class="carousel carousel-fade" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="~/Images/HomeImage/connection.jpg">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="~/Images/HomeImage/office.jpg">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="~/Images/HomeImage/printed-circuit-board.jpg">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="~/Images/HomeImage/IS2A6198-1.jpg">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="~/Images/HomeImage/desktop.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    }
+                </div><!-- #intro -->
+                <!--==========================
+                  Quick Links
+                ============================-->
+                <div class="col-lg-2 homestyle shadow-sm">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeK8YRUb2iS_r4xSMLXkkjONTyIoTol1zPLtUxMb9LQITIAnA/viewform?c=0&w=1" target="_blank">
+                                <i class="fa fa-paper-plane"></i>Raise IT Ticket
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href=" https://lofru.greythr.com/" target="_blank">
+                                <i class="fa fa-mixcloud"></i>GreytHR
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://sites.google.com/a/logic-fruit.com/intranet/directory" target="_blank">
+                                <i class="fa fa-address-book"></i>Contact Directory
+                            </a>
+                        </li>
+                    </ul>
+                    <!--==========================
+                    Important Documents
+                    ============================-->
+                    <h5 class="text-nowrap">Important Documents</h5>
+                    <ul>
+                        <li>
+                            <a href="~/PDF Files/Sample Employee Handbook.pdf" target="_blank">
+                                <i class="fa fa-file-pdf-o"></i>Employee Handbook
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Documents">
+                                <i class="fa fa-user"></i>Admin
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Documents">
+                                <i class="fa fa-money"></i>Finance
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Documents">
+                                <i class="fa fa-group"></i>HR
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Documents">
+                                <i class="fa fa-mouse-pointer"></i>IT
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Documents">
+                                <i class="fa fa-cogs"></i>R&D
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--==========================
+             Announcement Section
+            ===========================-->
+            <section id="about">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-12 shadow-sm" id="announcement">
+                                <div class="num"></div>
+                                <!-- Left and right controls -->
+                                <a class="fa fa-chevron-circle-left" href="#myCarousel" data-slide="prev"></a>
+                                <a class="fa fa-chevron-circle-right" href="#myCarousel" data-slide="next"> </a>
+                                <h4 style="text-align:center">Annoucements</h4>
+                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @if (ViewBag.AllAnnouncements != null)
+                                        {
+                                            var first = true;
+                                            foreach (var item in (ViewBag.AllAnnouncements as List<LFTERPsys.Models.AnnouncementDataModel>))
+                                            {
+                                                <div class="carousel-item @(first?Html.Raw("active"):Html.Raw(""))">
+                                                    <h5>@item.subject</h5>
+                                                    <p>@item.description</p>
+                                                    <h6>@item.date.ToString("dd-MMM-yyyy")</h6>
+                                                </div>
+                                                first = false;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="carousel-item active">
+                                                <h5>Announments</h5>
+                                                <p>No announcements to show.</p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 shadow-sm" id="project" style="text-align:center;">
+                                <span class="fa fa-rocket" style="color:#1ebeb4; font-size:1.9em; margin-top:5px;"></span>
+                                <h4>Project Launched</h4>
+                                <span class="counter-count" id="counter" style="color:#1ebeb4; font-size:1.9em">@ViewBag.projno</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--==========================
+                     Calendar Section
+                    ============================-->
+                    <div class="col-lg-6">
+                        <div id="calender"></div>
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog modal-info">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"><span id="eventTitle" style="font-weight:bolder"></span></h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="pDetails"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="row">
+                            <div class="col-lg-12 shadow-sm" id="legends">
+                                <h4 class="text-center">Legends</h4>
+                                <div class="input-color">
+                                    <p> Weekend Off (Sat & Sun) </p>
+                                    <div class="colorboxblue"></div>
+                                </div>
+                                <div class="input-color">
+                                    <p> Holiday Off </p>
+                                    <div class="colorboxred"></div>
+                                </div>
+                                <div class="input-color">
+                                    <p class="text-nowrap"> Only Banglore Office Holiday </p>
+                                    <div class="colorboxgreen"></div>
+                                </div>
+                                <div class="input-color">
+                                    <p class="text-nowrap"> Only Gurugram Office Holiday </p>
+                                    <div class="colorboxpink"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 shadow-sm" id="birthday">
+                                <h4 class="text-center text-nowrap" style="font-size:21px">Upcoming Birthdays</h4>
+                                <div class="input-color">
+                                    <p> My Birthday </p>
+                                    <div class="colorboxgreen"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--==========================
+             Documents Section
+            ============================-->
+            <div id="document">
+                <h2 id="Documents">Documents</h2>
+                <div class="row" style="padding-top:20px;">
+                    <div class="col-lg-4 shadow-sm wow fadeInLeft" id="admin">
+                        <div class="icon"><i class="fa fa-user"></i></div>
+                        <h4>Administration</h4>
+                        <ul>
+                            <li>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeK8YRUb2iS_r4xSMLXkkjONTyIoTol1zPLtUxMb9LQITIAnA/viewform?c=0&w=1" target="_blank">
+                                    Raise IT Ticket
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href=" https://lofru.greythr.com/" target="_blank">
+                                    GreytHR
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://sites.google.com/a/logic-fruit.com/intranet/directory" target="_blank">
+                                    Contact Directory
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 shadow-sm wow fadeInDown" id="finance">
+                        <div class="icon"><i class="fa fa-dollar"></i></div>
+                        <h4>Finance</h4>
+                        <ul>
+                            <li>
+                                <a href="#" target="_blank">
+                                    Mantis
+                                </a>
+                            </li>
+                          
+                            <li>
+                                <a href="#" target="_blank">
+                                    SVN
+                                </a>
+                            </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 shadow-sm wow fadeInRight" id="hr">
+                        <div class="icon"><i class="fa fa-group"></i></div>
+                        <h4>Human Resource</h4>
+                        <ul>
+                            <li>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeK8YRUb2iS_r4xSMLXkkjONTyIoTol1zPLtUxMb9LQITIAnA/viewform?c=0&w=1" target="_blank">
+                                    Raise IT Ticket
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href=" https://lofru.greythr.com/" target="_blank">
+                                    GreytHR
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://sites.google.com/a/logic-fruit.com/intranet/directory" target="_blank">
+                                    Contact Directory
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 shadow-sm wow fadeInLeft" id="it">
+                        <div class="icon"><i class="fa fa-mouse-pointer"></i></div>
+                        <h4>IT</h4>
+                        <ul>
+                            <li>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeK8YRUb2iS_r4xSMLXkkjONTyIoTol1zPLtUxMb9LQITIAnA/viewform?c=0&w=1" target="_blank">
+                                    Raise IT Ticket
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="~/PDF Files/Sample IT Policies and Procedures Manual.pdf" target="_blank">
+                                    IT Policies
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/PDF Files/Sample IT TroubleShoot.pdf" target="_blank">
+                                    IT Troubleshoot
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 shadow-sm wow fadeInRight" id="rd">
+                        <div class="icon"><i class="fa fa-cogs"></i></div>
+                        <h4>R&D</h4>
+                        <ul>
+                            <li>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeK8YRUb2iS_r4xSMLXkkjONTyIoTol1zPLtUxMb9LQITIAnA/viewform?c=0&w=1" target="_blank">
+                                    Raise IT Ticket
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href=" https://lofru.greythr.com/" target="_blank">
+                                    GreytHR
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://sites.google.com/a/logic-fruit.com/intranet/directory" target="_blank">
+                                    Contact Directory
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--==========================
+               Contact Section
+             ============================-->
+            <section id="contact" class="wow fadeInUp">
+                <div class="section-header">
+                    <h2>Contact Us</h2>
+                </div>
+                <div class="row contact-info">
+                    <div class="col-md-4" align="left">
+                        <div class="contact-address">
+                            <h3>Gurgaon Office</h3>
+                            <address><i class="fa fa-map-marker"></i> 806, 8th Floor BPTP Park<br /> Centra Sector–30, NH–8, Gurgaon – 122001 Haryana(India)</address>
+                            <br />
+                            <p><i class="fa fa-envelope"></i><a href="mailto:info@logic-fruit.com"> info@logic-fruit.com</a></p>
+                            <br />
+                            <p><i class="fa fa-phone"></i><a href="tel:+91 1244117090"> +91 1244117090</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" align="left">
+                        <div class="contact-address">
+                            <h3>Banglore Office</h3>
+                            <address><i class="fa fa-map-marker"></i> 5C-416, Ramamurthy Nagar Bangalore – 560016 Karnataka (India)</address>
+                            <br />
+                            <p><i class="fa fa-envelope"></i><a href="mailto:info@logic-fruit.com"> sales@logic-fruit.com</a></p>
+                            <br />
+                            <p><i class="fa fa-phone"></i><a href="tel:+91 1244117090"> +91 80-41124411</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" align="left">
+                        <div class="contact-address">
+                            <h3>USA Office</h3>
+                            <address><i class="fa fa-map-marker"></i> 2443 Fillmore St #380-6803 San Francisco CA 94115 (USA)</address>
+                            <br />
+                            <p><i class="fa fa-envelope"></i><a href="mailto:info@logic-fruit.com"> us@logic-fruit.com</a></p>
+                            <br>
+                            <p><i class="fa fa-phone"></i><a href="tel:+91 1244117090"> +1-415-745-8835</a></p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </section> <!--#contact -->
+        </div>
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up bti"></i></a>
+    </div>
+</body>
+
+@section Scripts{
+    <script src="~/Scripts/LofruCalendarScripts/moment.min.js"></script>
+    @Scripts.Render("~/bundles/HomeScript")
+}

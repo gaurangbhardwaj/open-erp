@@ -1,0 +1,71 @@
+﻿@model IEnumerable<LFTERPsys.Models.EmployeeInfoDataModel>
+
+@{
+    ViewBag.Title = "AllEmployeesEOS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int validateyear;
+    if (DateTime.Now.Month >= 1 && DateTime.Now.Month <= 3)
+    {
+        validateyear = (Convert.ToInt32(DateTime.Now.ToString("yyyy")) - 1);
+    }
+    else
+    {
+        validateyear = DateTime.Now.Year;
+    }
+}
+
+<style>
+    .input-group :focus {
+        box-shadow: none;
+    }
+</style>
+
+@Styles.Render("~/Content/font-awesome")
+@Styles.Render("~/Content/SharedCss/dataTables.css")
+
+
+<div class="text-center font-weight-bold h3">
+    All Employees EOS : @validateyear-@(validateyear + 1)
+</div>
+<br />
+
+<div class="container-fluid">
+    <table class="table" border="0" id="employeeEos">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.empid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.empname)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="items">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.empid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.empname)
+                    </td>
+                    <td>
+                        <div class="text-right h5">
+                            <a href="\EosData\EmployeeEos\@ViewBag.SessionID\@item.empid" class="badge badge-pill badge-primary" id="RollBack" style="color:white">View EOS</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/EosDataScripts/EmployeeEos/paging.js")
+    @Scripts.Render("~/bundles/Paging")
+}
+

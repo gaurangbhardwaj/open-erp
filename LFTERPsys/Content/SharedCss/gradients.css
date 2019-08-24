@@ -1,0 +1,39 @@
+﻿.dusty-grass-gradient {
+    background-image: -webkit-linear-gradient(330deg,#d4fc79 0,#96e6a1 100%);
+    background-image: -o-linear-gradient(330deg,#d4fc79 0,#96e6a1 100%);
+    background-image: linear-gradient(120deg,#d4fc79 0,#96e6a1 100%);
+}
+
+.blue-gradient-rgba {
+    background: -webkit-linear-gradient(50deg,rgba(69,202,252,.9),rgba(48,63,159,.9)) !important;
+    background: -o-linear-gradient(50deg,rgba(69,202,252,.9),rgba(48,63,159,.9)) !important;
+    background: linear-gradient(40deg,rgba(69,202,252,.9),rgba(48,63,159,.9)) !important;
+    background-color: rgba(0, 0, 0, 0);
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-image: linear-gradient(40deg, rgba(69, 202, 252, 0.9), rgba(48, 63, 159, 0.9));
+    background-size: auto;
+    background-origin: padding-box;
+    background-clip: border-box;
+}
+
+.young-passion-gradient {
+    background-image: -webkit-gradient(linear,left top,right top,from(#ff8177),color-stop(0,#ff867a),color-stop(21%,#ff8c7f),color-stop(52%,#f99185),color-stop(78%,#cf556c),to(#b12a5b));
+    background-image: -webkit-linear-gradient(left,#ff8177 0,#ff867a 0,#ff8c7f 21%,#f99185 52%,#cf556c 78%,#b12a5b 100%);
+    background-image: -o-linear-gradient(left,#ff8177 0,#ff867a 0,#ff8c7f 21%,#f99185 52%,#cf556c 78%,#b12a5b 100%);
+    background-image: linear-gradient(to right,#ff8177 0,#ff867a 0,#ff8c7f 21%,#f99185 52%,#cf556c 78%,#b12a5b 100%);
+}
+
+.peach-gradient-rgba {
+    background: -webkit-linear-gradient(50deg,rgba(255,216,111,.9),rgba(252,98,98,.9)) !important;
+    background: -o-linear-gradient(50deg,rgba(255,216,111,.9),rgba(252,98,98,.9)) !important;
+    background: linear-gradient(40deg,rgba(255,216,111,.9),rgba(252,98,98,.9)) !important;
+}
+
+.purple-gradient-rgba {
+    background: -webkit-linear-gradient(50deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+    background: -o-linear-gradient(50deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+    background: linear-gradient(40deg,rgba(255,110,196,.9),rgba(120,115,245,.9)) !important;
+}
