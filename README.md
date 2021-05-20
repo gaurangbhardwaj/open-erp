@@ -1,4 +1,4 @@
-# GB-ERPsys
+# OpenERP
 
 ### A open source ERP system to manage your employees data.
 #### > Comes with full .NET security feature with industrial standard
